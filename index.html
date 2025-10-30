@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HAYABUZA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style/main.css">
+  <script src="https://cdn.jsdelivr.net/npm/three@0.154.0/build/three.min.js"></script>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="logo no-caret" id="logo">HAYABUZA</div>
+    <div class="menu">
+      <span class="nav-link no-caret" data-target="hero">หน้าแรก</span>
+      <span class="nav-link no-caret" data-target="login">เข้าสู่ระบบ</span>
+      <span class="nav-link no-caret" data-target="contact">ติดต่อแอดมิน</span>
+      <!-- ปุ่มออกจากระบบจะถูกเพิ่มโดย JavaScript เมื่อล็อกอิน -->
+    </div>
+    <div class="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <h1 class="hero-text no-caret">HBZ×MOD×LRG</h1>
+    <button class="btn" id="hero-login-btn">เข้าสู่เว็บไซต์</button>
+    <div id="connection-status" style="margin-top: 20px; font-size: 0.9em; color: #00ff99;"></div>
+  </section>
+
+  <!-- Contact Modal -->
+  <div id="contact-modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-btn" id="close-contact">&times;</span>
+      <img src="assets/images/discord.png" alt="Discord" class="discord-img">
+      <button class="btn" onclick="window.open('https://discord.gg/BFysWWAa4Z', '_blank')">ติดต่อแอดมิน</button>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="login-modal" class="modal hidden">
+    <div class="modal-content login-box">
+      <span class="close-btn" id="close-login">&times;</span>
+      <h2>เข้าสู่ระบบ</h2>
+      <input type="text" placeholder="ชื่อผู้ใช้" class="input-field eng-input" id="username" minlength="4">
+      <div class="password-container">
+        <input type="password" placeholder="รหัสผ่าน" class="input-field password-input eng-input" id="password" minlength="4">
+        <span class="toggle-password">🔑</span>
+      </div>
+      <div class="options">
+        <label class="remember"><input type="checkbox" id="remember"> จำรหัสผ่าน</label>
+        <a href="#" class="no-caret" id="forgot">ลืมรหัสผ่าน?</a>
+      </div>
+      <button class="btn" id="login-btn">เข้าสู่ระบบ</button>
+      <button class="btn-secondary" id="register-btn">สมัครสมาชิก</button>
+      <div class="error-message" id="login-error"></div>
+    </div>
+  </div>
+
+  <!-- Register Modal -->
+  <div id="register-modal" class="modal hidden">
+    <div class="modal-content login-box">
+      <span class="close-btn" id="close-register">&times;</span>
+      <h2>สมัครสมาชิก</h2>
+      <input type="text" placeholder="ชื่อผู้ใช้ (4 ตัวขึ้นไป)" class="input-field eng-input" id="reg-username" minlength="4">
+      <input type="email" placeholder="อีเมล" class="input-field eng-input" id="reg-email">
+      <div class="password-container">
+        <input type="password" placeholder="รหัสผ่าน (4 ตัวขึ้นไป)" class="input-field password-input eng-input" id="reg-password" minlength="4">
+        <span class="toggle-password">🔑</span>
+      </div>
+      <div class="password-container">
+        <input type="password" placeholder="ยืนยันรหัสผ่าน" class="input-field password-input eng-input" id="reg-confirm-password" minlength="4">
+        <span class="toggle-password">🔑</span>
+      </div>
+      <div class="options">
+        <label class="remember"><input type="checkbox" id="reg-terms"> ยอมรับเงื่อนไขการใช้งาน</label>
+      </div>
+      <button class="btn" id="confirm-register-btn">สมัครสมาชิก</button>
+      <button class="btn-secondary" id="back-to-login">กลับไปเข้าสู่ระบบ</button>
+      <div class="error-message" id="register-error"></div>
+    </div>
+  </div>
+
+  <!-- Forgot Password Modal -->
+  <div id="forgot-modal" class="modal hidden">
+    <div class="modal-content login-box">
+      <span class="close-btn" id="close-forgot">&times;</span>
+      <h2>ลืมรหัสผ่าน</h2>
+      <input type="text" placeholder="ชื่อผู้ใช้" class="input-field eng-input" id="forgot-username">
+      <input type="email" placeholder="อีเมลที่ลงทะเบียน" class="input-field eng-input" id="forgot-email">
+      <button class="btn" id="send-reset-btn">รีเซ็ตรหัสผ่าน</button>
+      <button class="btn-secondary" id="back-to-login-from-forgot">กลับไปเข้าสู่ระบบ</button>
+      <div class="error-message" id="forgot-error"></div>
+    </div>
+  </div>
+
+  <!-- Reset Password Modal -->
+  <div id="reset-modal" class="modal hidden">
+    <div class="modal-content login-box">
+      <span class="close-btn" id="close-reset">&times;</span>
+      <h2>ตั้งรหัสผ่านใหม่</h2>
+      <div class="password-container">
+        <input type="password" placeholder="รหัสผ่านใหม่ (4 ตัวขึ้นไป)" class="input-field password-input eng-input" id="reset-new-password" minlength="4">
+        <span class="toggle-password">🔑</span>
+      </div>
+      <div class="password-container">
+        <input type="password" placeholder="ยืนยันรหัสผ่านใหม่" class="input-field password-input eng-input" id="reset-confirm-password" minlength="4">
+        <span class="toggle-password">🔑</span>
+      </div>
+      <button class="btn" id="confirm-reset-btn">ตั้งรหัสผ่านใหม่</button>
+      <button class="btn-secondary" id="back-to-login-from-reset">กลับไปเข้าสู่ระบบ</button>
+      <div class="error-message" id="reset-error"></div>
+    </div>
+  </div>
+
+  <canvas id="bgCanvas"></canvas>
+  <script src="js/main.js" defer></script>
+</body>
+</html>
